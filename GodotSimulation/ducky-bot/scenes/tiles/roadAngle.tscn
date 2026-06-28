@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://duoaljghdtl54"]
+
+[ext_resource type="Texture2D" uid="uid://choh72qmylojb" path="res://textures/CircularRoad_Final_curve.png" id="1_hipvj"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_y5fr7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4lmuk"]
+albedo_texture = ExtResource("1_hipvj")
+albedo_texture_force_srgb = true
+
+[node name="Node3D" type="Node3D" unique_id=1649637452]
+
+[node name="RoadStraight" type="MeshInstance3D" parent="." unique_id=185978199]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+mesh = SubResource("PlaneMesh_y5fr7")
+surface_material_override/0 = SubResource("StandardMaterial3D_4lmuk")

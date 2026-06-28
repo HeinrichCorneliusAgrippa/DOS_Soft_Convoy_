@@ -1,0 +1,46 @@
+# Per-bot HSV override for bot "V1".  Selected at deploy time with:
+#     python3 launch.py --run --host <IP> --bot V1 --task project_lead
+# The launcher MERGES these keys over config/lane_servoing_hsv_config.yaml and
+# ships the result as the active config (only the keys below override the base;
+# anything omitted inherits the shared base). See launch.py:package_task.
+#
+# White tape samples from V1's camera (pink/blue cast — hue runs high, S stays
+# low-to-moderate). White is matched on low-S / high-V; hue is full-range:
+#   H 152 S 20 V 199  (px 556,283)  close
+#   H 100 S 19 V 192  (px 475,198)  far
+#   H 150 S 16 V 197  (px 547,293)  between
+# These all fall INSIDE the band below (S<=60, V>=120), so the HSV was never the
+# problem — the white was being matched then DISCARDED by the detector's side
+# filter. Every white px above sits at x=475..556 in the 640-wide frame, i.e. the
+# RIGHT half; the detector defaulted to keeping LEFT-side white only. Hence
+# white_edge_side below.
+white_lower_h: 0
+white_lower_s: 0
+white_lower_v: 120
+white_upper_h: 179
+white_upper_s: 60
+white_upper_v: 255
+
+# V1's white lane edge is on the RIGHT of the frame (samples at x~475..556 of
+# 640). The detector keeps white blobs on this side and drops the rest (opposite
+# lane edge / road glare). x_frac 0.45 keeps anything right of x~288 — clear of
+# V1's yellow centerline (sampled at x<=205) with margin for the edge swinging
+# inward on curves.
+white_edge_side: right
+white_edge_x_frac: 0.45
+
+# Yellow line samples from V1's camera (orange-leaning, hue ~12-16):
+#   H 12 S 139 V 226  (px 40,273)
+#   H 16 S 126 V 198  (px 121,162)
+#   H 16 S 100 V 160  (px 205,71)
+# These already fall inside the shared band, so the floors stay permissive
+# (S=25 / V=45 catch dim, distant dashes). The one real change: pull the hue
+# ceiling down from the shared 65 to 45 — V1's yellow tops out at 16, and 65
+# reaches into green (the off-road-green-as-yellow failure mode). 45 keeps a
+# wide margin above 16 while cutting that green tail.
+yellow_lower_h: 8
+yellow_lower_s: 25
+yellow_lower_v: 45
+yellow_upper_h: 45
+yellow_upper_s: 255
+yellow_upper_v: 255

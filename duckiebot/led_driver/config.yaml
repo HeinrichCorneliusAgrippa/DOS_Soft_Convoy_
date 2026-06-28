@@ -1,0 +1,21 @@
+i2c:
+  bus: 1                    # I2C bus number
+  address: 0x40             # PCA9685 LED controller address
+
+pwm:
+  frequency: 1600           
+  period: 4095             
+
+leds:
+  front_left: 0
+  front_right: 2
+  back_left: 3
+  back_right: 4
+
+channels:
+  red: 0                    # Offset for red channel
+  green: 1                  # Offset for green channel
+  blue: 2                   # Offset for blue channel
+
+defaults:
+  brightness: 0.5         

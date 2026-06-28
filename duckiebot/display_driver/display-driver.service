@@ -1,0 +1,18 @@
+[Unit]
+Description=DuckieBot Display Driver
+After=network.target hat-init.service
+Wants=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/kvati/DuckieTown-Rewritten
+ExecStartPre=/bin/sleep 10
+ExecStart=/usr/bin/python3 -u /home/kvati/DuckieTown-Rewritten/duckiebot/display_driver/display_driver.py
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

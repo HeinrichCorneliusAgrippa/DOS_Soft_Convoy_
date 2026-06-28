@@ -1,0 +1,182 @@
+# ============================================================================
+# LEAD bot config (project_lead). Autonomous lane follower that obeys traffic
+# signs and drives a fixed route, executing a maneuver at each red-line
+# intersection. Many values below need field tuning on the real floor/lighting.
+# ============================================================================
+
+# --- speeds ---
+# cruise_speed is the TOP speed; every driving state is cruise * a factor < 1
+# (curve_speed_factor, steer_floor_factor, slow_factor, slow_after_factor). If
+# those products fall below the motor breakaway the bot won't move, so cruise is
+# set high enough that even the lowest factor (~0.5) clears it. Raised 0.30->0.40.
+cruise_speed: 0.40
+slow_factor:  0.50          # SLOW_ZONE speed = cruise * slow_factor
+
+# --- motor deadzone (REAL bot only; sim has a pose and is gated out) ---
+# The slow CURVE creep (cruise * curve_speed_factor ~= 0.18) lands at/below the
+# DB21 motor breakaway, so the bot stalls ON THE SPOT in CURVE without ever
+# tripping LANE_LOST. Lift any wheel commanded to MOVE but below this up to it
+# (a commanded full stop stays 0). The lift preserves the steering differential
+# (lifts BOTH wheels), so a slow curve still turns. Field-tune to just above the
+# wheel value at which the bot stalls: observed stalling at 0.22 (turns work with
+# the inner wheel ~0.28), so set 0.28. Raise if it still stalls in CURVE. 0 disables.
+wheel_deadzone: 0.28
+
+# --- sign timing (seconds) ---
+stop_duration: 2.0          # halt this long at a STOP sign / intersection
+slow_duration: 2.0
+slow_cooldown: 3.0
+
+# --- route ---
+# fixed: follow the route list below (one step per red-line intersection).
+# auto:  pick a valid turn at each intersection from the map + live pose
+#        (sim only; the real robot has no pose and falls back to the list).
+route_mode: fixed
+auto_seed: null
+
+# --- fixed route ---
+# Steps consumed one-per-intersection (each red-line event). Tokens:
+#   straight | right | left | stop   (stop = final, latched halt)
+# NOTE: spawn-relative — fixed mode executes tokens blindly in the order
+# intersections are met; it does NOT check the map. Designed for the
+# bottom-left west-column spawn heading SOUTH (opposite lane). Resulting path:
+#   4-way(straight) -> top-T(left) -> west-T(left) -> 4-way(straight) ->
+#   top-T(left) -> 4-way(straight) -> STOP at the west-T.
+# Validate any route/spawn change with: python3 scripts/trace_route.py
+route: [straight, left, left, straight, left, straight, stop]
+
+# --- sim turn geometry (pose odometry only; the real robot keeps the
+#     field-tuned steer caps below) ---
+turn_radius_left_m:  0.85   # SIM ONLY (pose odometry). Target arc radius for left turns.
+                            # Trimmed 1.00->0.85 (a little less wide). Sim ends the turn on yaw target
+                            # (not time); left_base_factor (1.8) also sets the sim left-turn speed.
+                            # (Real bot ignores this knob -- its width comes from left_base_factor.)
+turn_radius_right_m: 0.17   # target arc radius for right turns (inner lane arc ~0.17 m)
+
+# --- curve slowdown ---
+# The lane PD's steering was tuned around the lane agent's own base speed; at
+# full cruise the same steer differential gives proportionally less curvature
+# and the bot runs wide into the opposing lane on 90-deg curves. Slow down
+# when a curve is detected (or steering demand is high).
+curve_speed_factor: 0.55     # CURVE-state speed = cruise * this. Pulled back 0.8->0.55
+                             # (~0.22): at cruise 0.40 the 0.8 curve speed (~0.32) ran
+                             # WIDE and crossed the yellow -- higher speed = less curvature
+                             # per unit steer. The differential-preserving deadzone lift
+                             # keeps this slower curve from stalling. Lower for tighter/
+                             # slower curves, raise toward cruise for faster/wider ones.
+curve_hold_s:       0.4      # hold CURVE this long after the last detection (no flapping)
+steer_slowdown:     2.5      # speed scales by (1 - this * |steer|): more steering
+                             # demand = sharper geometry = slower (continuous,
+                             # replaces the old hard threshold)
+steer_floor_factor: 0.7      # never slow below this fraction of the base speed
+                             # (raised 0.5->0.7: hard-steer states must still clear
+                             # the motor breakaway -- cruise 0.40 * 0.7 = 0.28)
+
+# --- maneuver shape / timing (FIELD-TUNE) ---
+turn_base_speed:    0.38    # forward speed during a turn arc (raised 0.30->0.38: lifts the
+                            # inner wheel clear of the motor deadzone so turns don't stall)
+turn_steer:         0.25    # steer magnitude during a turn (clamped to base by control)
+left_widen:         0.40    # REAL bot (timed turn). Left steer = turn_steer * this -> 0.25*0.40 = 0.10.
+                            # Lowered 0.70->0.40: arc radius R = base*baseline/(2*steer), so LESS steer =
+                            # WIDER radius. Combined with left_base_factor below this ~DOUBLES the left
+                            # radius (was cutting into the oncoming lane). Lower steer also shrinks the
+                            # swept angle (angle ~ steer*turn_time_s), so turn_time_s was raised to keep
+                            # the turn at ~90 deg -- the two move together.
+left_base_factor:   1.50    # REAL bot. Forward speed during a left turn only (base = 0.38*1.50 = 0.57).
+                            # This one knob sets BOTH the speed AND the radius: R ~ base/steer, so
+                            # lowering it slows the turn down AND tightens the arc together (the two
+                            # move 1:1). The swept angle (steer*turn_time_s) does NOT depend on base,
+                            # so the turn DURATION is untouched -- this won't make the turn "long" again.
+                            # 2.2->1.8->1.5: each step ~15-18% slower and tighter. Go lower to slow/
+                            # tighten more; raise to speed up/widen. CEILING base+steer < 1.0 (max ~2.35).
+cross_base_speed:   0.36    # forward speed crossing straight through an intersection
+min_turn_s:         0.8     # don't accept lane-reacquire exit before this
+max_turn_s:         6.0     # hard timeout for a turn (raised to clear the longer 5.0s timed left turn)
+min_cross_s:        0.9
+max_cross_s:        2.5
+turn_yaw_target_rad: 1.40   # ~80 deg; encoder-yaw early exit (used only if encoders present)
+slow_after_turn_s:  2.0     # slow window after a maneuver so the follower reacquires
+slow_after_factor:  0.7     # speed during that window = cruise * this (0.6->0.7
+                            # so the post-turn creep also clears the breakaway)
+wheel_baseline_m:   0.10    # wheel-to-wheel distance for encoder yaw estimate
+
+# --- real-robot maneuver timing (FIELD-TUNE) ---
+# On the real bot the encoder yaw/distance is noisy and the lane reads "healthy"
+# the moment the intersection markings enter frame, so the odometry / reacquire
+# exits fired after a brief moment and the bot bailed before finishing the turn.
+# When maneuver_timed is on, each maneuver instead runs for a FIXED duration:
+# the bot holds a steady turn arc / drives straight for turn_time_s / cross_time_s,
+# then hands back to the lane controller. Sim ignores this (it has exact pose
+# odometry and keeps its tuned closed loop). Tune the two durations on the floor:
+# turn_time_s until a ~90 deg turn completes, cross_time_s until it clears the box.
+maneuver_timed:  true
+turn_time_s:     2.1375     # hold the turn arc this long. 5.0->2.5->2.375->2.1375 (-10%): the turn was running
+                            # ~twice as long as it should (over-sweeping). This ONLY changes the
+                            # duration/angle, NOT the radius -- the wide arc (left_widen 0.40 +
+                            # left_base_factor 1.8) is untouched, so the turn stays wide but ends
+                            # sooner. Nudge UP if it now stops short of 90 deg (under-rotates), DOWN
+                            # if it still over-rotates. NOTE: shared by left AND right turns (the
+                            # current route has no rights, so this only affects the left turns).
+cross_time_s:    4.0        # drive straight across the intersection this long
+cross_trim:     -0.05       # REAL bot only: fixed steer bias held during a straight cross to cancel
+                            # the slight drift (the multiplicative wheel trim is tuned at lane speed
+                            # and leaves a residual veer at the cross speed). + = left, - = right.
+                            # Set -0.05 because it drifted LEFT -> bias right. More drift -> more
+                            # magnitude; flip the sign if it now veers right. (Sim cross ignores this.)
+
+# --- lead steering smoother (FIELD-TUNE, real-only) ---
+# At the real bot's low frame rate the intersection's stop-line + exit markings
+# entering the lane band throw a one-frame steering spike right before
+# CROSS_STRAIGHT; the motor mixer turns that into a hard right wheel differential
+# (a visible jerk) then a snap to straight. Smooth the lane STEER INPUT so the
+# spike is bounded per frame and decays into the cross. Applies on the REAL ROBOT
+# ONLY (gated on the absence of a Godot pose); the sim's tuned closed loop is left
+# untouched. Only the lane-following steer is smoothed — the timed turn arc is
+# passed through unchanged, so turn_time_s still sweeps its full angle.
+steer_lp_enabled: true     # master on/off for the smoother
+steer_lp_hz:      1.0      # dt-aware low-pass cutoff (Hz); ≈0.80/frame alpha at 3.8 FPS
+steer_slew_per_s: 0.55     # per-frame magnitude-slew cap (steer-units/s) ≈0.14/frame at
+                           # 3.8 FPS. LOWER (→0.40) if it still jerks; RAISE (→0.80) if
+                           # curve entry feels capped.
+steer_dt_max:     0.4      # cap the dt the filter sees (s) so a camera dropout can't
+                           # blow the slew ceiling open and re-admit the jerk on recovery.
+
+# --- closed-loop odometry maneuver targets (used when encoders are present) ---
+cross_distance_m:     0.50   # forward distance to clear one intersection tile (real)
+cross_distance_sim_m: 0.55   # sim (pose odometry): carry across the WHOLE unmarked
+                             # box before handing back to the lane PD — releasing
+                             # mid-box left it steering with no markings in view
+maneuver_heading_kp:  0.6    # P gain holding heading straight during a cross
+turn_kp:              0.8    # P gain on remaining yaw error during a turn
+cross_dist_tol_m:     0.03   # distance tolerance for the cross exit
+turn_yaw_tol_rad:     0.08   # yaw tolerance for the turn exit
+
+# --- red stop-line firing gates (FIELD-TUNE) ---
+stopline_fire_dist:   0.45  # red-line dist_proxy >= this (0=far .. 1=near) to fire
+stopline_fire_width:  0.40  # red-line must span >= this fraction of frame width
+stopline_clear_frames: 5    # frames the line must be absent before the next event can fire
+
+# --- red stop-line geometry ---
+stopline_band_top_frac: 0.72   # detection band (low in frame)
+stopline_band_bot_frac: 0.98
+stopline_min_width_frac: 0.35  # a line spans a large fraction of width
+stopline_min_aspect:     3.0   # width/height: wide & short, not a blob
+stopline_min_area_px:    250
+
+# --- perception ---
+lane_healthy_min_pixels: 500
+
+# --- AprilTag traffic signs (Duckietown standard; cv2.aruco) ---
+# IDs MUST match your physical tags. Read them from the printed "tags=[...]"
+# (bot /status or /video page) or run: python scripts/decode_apriltag.py <photo>
+# VERIFIED via decode_apriltag.py on photos of the physical signs (tag36h11):
+# IDs 25, 26, 20. Assigned: 25 & 20 -> STOP, 26 -> SLOW.
+apriltag_family:    tag36h11   # tag36h11 | tag36h10 | tag25h9 | tag16h5
+apriltag_stop_ids:  [25, 20]   # STOP signs (verified tag36h11)
+apriltag_slow_ids:  [26, 24]   # SLOW-down signs (26 verified; 24 added — verify with decode_apriltag.py)
+apriltag_min_area_px: 0        # was 400; 0 = remember any decoded tag (near-gate below halts)
+
+# A near STOP tag halts the bot directly (independent of the intersection red line).
+stop_tag_near_area_frac: 0.04  # halt when STOP bbox >= this fraction of the frame; tune from printed bbox
+stop_tag_halt_s:         1.0   # how long to hold that halt
+

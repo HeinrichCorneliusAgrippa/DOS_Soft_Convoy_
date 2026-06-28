@@ -1,0 +1,10 @@
+[gd_resource type="Environment" format=3 uid="uid://xlfv0dsmbfcm"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_e7oap"]
+
+[sub_resource type="Sky" id="Sky_k15ss"]
+sky_material = SubResource("ProceduralSkyMaterial_e7oap")
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_k15ss")

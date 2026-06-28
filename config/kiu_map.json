@@ -1,0 +1,229 @@
+{
+ "tile_size": 0.6,
+ "tiles": [
+  {
+   "kind": "straight",
+   "x": 0.9,
+   "z": 2.7,
+   "rot": 180
+  },
+  {
+   "kind": "straight",
+   "x": 0.9,
+   "z": 3.3,
+   "rot": 180
+  },
+  {
+   "kind": "straight",
+   "x": 0.9,
+   "z": 3.9,
+   "rot": 180
+  },
+  {
+   "kind": "curve",
+   "x": 0.9,
+   "z": 2.1,
+   "rot": 180
+  },
+  {
+   "kind": "straight",
+   "x": 1.5,
+   "z": 2.1,
+   "rot": 270
+  },
+  {
+   "kind": "straight",
+   "x": 2.1,
+   "z": 2.1,
+   "rot": 270
+  },
+  {
+   "kind": "cross3",
+   "x": 2.7,
+   "z": 2.1,
+   "rot": 180
+  },
+  {
+   "kind": "straight",
+   "x": 2.7,
+   "z": 2.7,
+   "rot": 180
+  },
+  {
+   "kind": "curve",
+   "x": 2.7,
+   "z": 3.3,
+   "rot": 0
+  },
+  {
+   "kind": "curve",
+   "x": 2.1,
+   "z": 3.3,
+   "rot": 180
+  },
+  {
+   "kind": "straight",
+   "x": 2.1,
+   "z": 3.9,
+   "rot": 180
+  },
+  {
+   "kind": "cross3",
+   "x": 0.9,
+   "z": 4.5,
+   "rot": 270
+  },
+  {
+   "kind": "cross",
+   "x": 2.1,
+   "z": 4.5,
+   "rot": 270
+  },
+  {
+   "kind": "straight",
+   "x": 1.5,
+   "z": 4.5,
+   "rot": 270
+  },
+  {
+   "kind": "straight",
+   "x": 0.9,
+   "z": 5.1,
+   "rot": 0
+  },
+  {
+   "kind": "straight",
+   "x": 0.9,
+   "z": 5.7,
+   "rot": 0
+  },
+  {
+   "kind": "straight",
+   "x": 0.9,
+   "z": 6.3,
+   "rot": 0
+  },
+  {
+   "kind": "curve",
+   "x": 0.9,
+   "z": 6.9,
+   "rot": 270
+  },
+  {
+   "kind": "straight",
+   "x": 1.5,
+   "z": 6.9,
+   "rot": 270
+  },
+  {
+   "kind": "curve",
+   "x": 2.1,
+   "z": 6.9,
+   "rot": 0
+  },
+  {
+   "kind": "straight",
+   "x": 2.1,
+   "z": 6.3,
+   "rot": 0
+  },
+  {
+   "kind": "straight",
+   "x": 2.1,
+   "z": 5.7,
+   "rot": 0
+  },
+  {
+   "kind": "straight",
+   "x": 2.1,
+   "z": 5.1,
+   "rot": 0
+  },
+  {
+   "kind": "straight",
+   "x": 2.7,
+   "z": 4.5,
+   "rot": 90
+  },
+  {
+   "kind": "straight",
+   "x": 3.9,
+   "z": 4.5,
+   "rot": 90
+  },
+  {
+   "kind": "straight",
+   "x": 3.3,
+   "z": 4.5,
+   "rot": 90
+  },
+  {
+   "kind": "straight",
+   "x": 3.3,
+   "z": 2.1,
+   "rot": 90
+  },
+  {
+   "kind": "straight",
+   "x": 3.9,
+   "z": 2.1,
+   "rot": 90
+  },
+  {
+   "kind": "straight",
+   "x": 4.5,
+   "z": 2.1,
+   "rot": 90
+  },
+  {
+   "kind": "curve",
+   "x": 4.5,
+   "z": 4.5,
+   "rot": 0
+  },
+  {
+   "kind": "straight",
+   "x": 4.5,
+   "z": 3.9,
+   "rot": 0
+  },
+  {
+   "kind": "straight",
+   "x": 4.5,
+   "z": 3.3,
+   "rot": 0
+  },
+  {
+   "kind": "curve",
+   "x": 4.5,
+   "z": 2.7,
+   "rot": 180
+  },
+  {
+   "kind": "curve",
+   "x": 5.1,
+   "z": 2.7,
+   "rot": 0
+  },
+  {
+   "kind": "curve",
+   "x": 5.1,
+   "z": 2.1,
+   "rot": 90
+  }
+ ],
+ "ducks": [],
+ "signs": [],
+ "bot": {
+  "x": 1.032,
+  "z": 6.3,
+  "heading": -3.141592653589793
+ },
+ "npc_path": null,
+ "bounds": {
+  "min_x": 0.6000000000000001,
+  "max_x": 5.3999999999999995,
+  "min_z": 1.8,
+  "max_z": 7.2
+ }
+}

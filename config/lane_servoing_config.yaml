@@ -1,0 +1,8 @@
+base_speed: 0.31
+curve_speed: 0.25
+curve_threshold: 15
+d_gain: 0.79
+detection_threshold: 100
+heading_gain: 1.03
+lateral_gain: 26
+p_gain: 0.24

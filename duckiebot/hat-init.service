@@ -1,0 +1,20 @@
+[Unit]
+Description=DuckieTown HAT hardware initialization
+# Run very early — before anything that needs I2C or motors
+DefaultDependencies=no
+After=local-fs.target sysinit.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+# Set I2C bus clock to 400kHz (required for PCA9685 reliability)
+ExecStart=/bin/bash -c 'echo 400000 > /sys/bus/i2c/devices/i2c-1/bus_clk_rate'
+# Set GPIO149 (board pin 29) HIGH to power/enable the HAT
+# WITHOUT THIS: PCA9685 at 0x40 (LEDs) and 0x60 (motors) will NOT appear on I2C bus
+ExecStart=/bin/bash -c 'echo 149 > /sys/class/gpio/export 2>/dev/null; true'
+ExecStart=/bin/sleep 0.5
+ExecStart=/bin/bash -c 'echo out > /sys/class/gpio/gpio149/direction'
+ExecStart=/bin/bash -c 'echo 1   > /sys/class/gpio/gpio149/value'
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://by8pqr474iaqj"]
+
+[ext_resource type="Script" uid="uid://c1emmt6qv86xe" path="res://scripts/Moveee.gd" id="1_fko8c"]
+[ext_resource type="PackedScene" uid="uid://cghelvr8fx5bv" path="res://models/VehicleCorected.glb" id="2_0lnb2"]
+[ext_resource type="Environment" uid="uid://xlfv0dsmbfcm" path="res://Environment.tres" id="3_bb8bq"]
+[ext_resource type="Script" uid="uid://6jifsj17vca2" path="res://scripts/CameraTcpStreamer.gd" id="3_qt1m1"]
+[ext_resource type="Script" uid="uid://b2oiuecph43vd" path="res://scripts/WheelCommandServer.gd" id="4_twjsn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bir6l"]
+size = Vector3(0.1350708, 0.11753559, 0.19760895)
+
+[node name="DuckieBot" type="CharacterBody3D" unique_id=865415826]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+script = ExtResource("1_fko8c")
+
+[node name="VehicleCorected" parent="." unique_id=1573770069 instance=ExtResource("2_0lnb2")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="BotCameraViewport" type="SubViewport" parent="." unique_id=1871592123]
+size = Vector2i(640, 480)
+render_target_update_mode = 4
+
+[node name="BotCamera" type="Camera3D" parent="BotCameraViewport" unique_id=2016536588]
+transform = Transform3D(0.9995779, -0.006940999, 0.028210983, -0.00024138541, 0.9690231, 0.24697018, -0.029051311, -0.24687275, 0.9686124, 0.0030050278, 0.071057335, -0.080359064)
+environment = ExtResource("3_bb8bq")
+
+[node name="CameraStreamer" type="Node" parent="." unique_id=111476925]
+script = ExtResource("3_qt1m1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=894967562]
+transform = Transform3D(0.9999896, 0, -4.301903e-09, 0, 1, 0, 4.301903e-09, 0, 0.9999896, 2.8588012e-11, 0.03603549, 0.006219766)
+shape = SubResource("BoxShape3D_bir6l")
+
+[node name="WheelServer" type="Node3D" parent="." unique_id=764820156]
+transform = Transform3D(0.06310382, 0, -0.9980065, 0, 1, 0, 0.9980065, 0, 0.06310382, 0.000103943596, 0.036302537, -0.0130184945)
+script = ExtResource("4_twjsn")

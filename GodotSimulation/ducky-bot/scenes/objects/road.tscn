@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bregs0cv5ugm1"]
+
+[ext_resource type="PackedScene" uid="uid://dnkuxecj557aq" path="res://models/road.glb" id="1_4sfnf"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_3veuu"]
+
+[node name="Road" type="Node3D" unique_id=879988088]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=255398215]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1325684726]
+transform = Transform3D(0.76736665, 0, 0.6412086, 0, 1, 0, -0.6412086, 0, 0.76736665, 0.0022350252, 0.12290722, -0.13427795)
+shape = SubResource("WorldBoundaryShape3D_3veuu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1919718095]
+
+[node name="road" parent="MeshInstance3D" unique_id=1621644754 instance=ExtResource("1_4sfnf")]
+transform = Transform3D(1, 0, 0, 0, 0.37510806, 0, 0, 0, 1, 0, 0, 0.8689234)

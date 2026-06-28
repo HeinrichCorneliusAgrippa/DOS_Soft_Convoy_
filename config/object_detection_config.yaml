@@ -1,0 +1,3 @@
+img_size: 416
+conf_threshold: 0.7
+nms_threshold: 0.45

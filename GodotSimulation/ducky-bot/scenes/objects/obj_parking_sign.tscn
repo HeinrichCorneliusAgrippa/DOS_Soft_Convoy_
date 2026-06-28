@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bm6eeklw3fh22"]
+
+[ext_resource type="Script" uid="uid://obyuy0tcovi0" path="res://scripts/sign.gd" id="1_mybph"]
+[ext_resource type="PackedScene" uid="uid://dfqspm6s68ico" path="res://models/parkingsign.glb" id="1_parking"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bk0pk"]
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_m4d84"]
+material = SubResource("StandardMaterial3D_bk0pk")
+size = Vector2(0.07, 0.07)
+
+[sub_resource type="BoxMesh" id="BoxMesh_s1u1l"]
+size = Vector3(0.08, 0.155, 0.001)
+
+[node name="ObjParkingSign" type="Node3D" unique_id=882736530]
+script = ExtResource("1_mybph")
+
+[node name="Sign" parent="." unique_id=1386084323 instance=ExtResource("1_parking")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+
+[node name="texture" type="MeshInstance3D" parent="." unique_id=1958272909]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.10689279, -0.00038161874)
+mesh = SubResource("PlaneMesh_m4d84")
+
+[node name="panel" type="MeshInstance3D" parent="." unique_id=1569353038]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14961894, -0.0010205396)
+mesh = SubResource("BoxMesh_s1u1l")

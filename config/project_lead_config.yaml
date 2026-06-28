@@ -1,0 +1,109 @@
+# ============================================================================
+# LEAD bot config (project_lead). Autonomous lane follower that obeys traffic
+# signs and drives a fixed route, executing a maneuver at each red-line
+# intersection. Many values below need field tuning on the real floor/lighting.
+# ============================================================================
+
+# --- speeds ---
+cruise_speed: 0.2
+slow_factor:  0.50          # SLOW_ZONE speed = cruise * slow_factor
+
+# --- sign timing (seconds) ---
+stop_duration: 1.0          # halt this long at a STOP sign / intersection
+slow_duration: 1.5
+slow_cooldown: 3.0
+
+# --- route ---
+# fixed: follow the route list below (one step per red-line intersection).
+# auto:  pick a valid turn at each intersection from the map + live pose
+#        (sim only; the real robot has no pose and falls back to the list).
+route_mode: fixed
+auto_seed: 1
+
+# --- fixed route ---
+# Steps consumed one-per-intersection (each red-line event). Tokens:
+#   straight | right | left | stop   (stop = final, latched halt)
+# NOTE: spawn-relative — fixed mode executes tokens blindly in the order
+# intersections are met; it does NOT check the map. Current sim spawn:
+# bottom-left of the KIU map, west column, heading up toward the west T.
+route: [straight, left, left, straight, straight, straight]
+
+# --- sim turn geometry (pose odometry only; the real robot keeps the
+#     field-tuned steer caps below) ---
+turn_radius_left_m:  0.35   # target arc radius for left turns (outer lane arc ~0.43 m)
+turn_radius_right_m: 0.17   # target arc radius for right turns (inner lane arc ~0.17 m)
+
+# --- curve handling ---
+# false: no dedicated CURVE state — curves are driven by the plain lane
+# follower (still slowed by steering demand, but no curve_speed_factor cap).
+# Intersection maneuvers (turn left / cross straight / turn right) are
+# unaffected.
+use_curve_state: false
+
+# --- curve slowdown (only used when use_curve_state: true) ---
+# The lane PD's steering was tuned around the lane agent's own base speed; at
+# full cruise the same steer differential gives proportionally less curvature
+# and the bot runs wide into the opposing lane on 90-deg curves. Slow down
+# when a curve is detected (or steering demand is high).
+curve_speed_factor: 0.6      # CURVE-state speed = cruise * this
+curve_hold_s:       0.4      # hold CURVE this long after the last detection (no flapping)
+steer_slowdown:     2.5      # speed scales by (1 - this * |steer|): more steering
+                             # demand = sharper geometry = slower (continuous,
+                             # replaces the old hard threshold)
+steer_floor_factor: 0.5      # never slow below this fraction of the base speed
+
+# --- maneuver shape / timing (FIELD-TUNE) ---
+turn_base_speed:    0.30    # forward speed during a turn arc
+turn_steer:         0.25    # steer magnitude during a turn (clamped to base by control)
+left_widen:         0.70    # left turns sweep wider: left steer law = turn_steer * this (1.0 = symmetric)
+left_base_factor:   1.00    # optional: scale forward speed during a left turn (>1 widens further)
+cross_base_speed:   0.30    # forward speed crossing straight through an intersection
+min_turn_s:         0.8     # don't accept lane-reacquire exit before this
+max_turn_s:         4.0     # hard timeout for a turn (raised from 3.0: a wider left turn needs more time)
+min_cross_s:        0.4
+max_cross_s:        2.0
+turn_yaw_target_rad: 1.40   # ~80 deg; encoder-yaw early exit (used only if encoders present)
+slow_after_turn_s:  2.0     # slow window after a maneuver so the follower reacquires
+slow_after_factor:  0.6     # speed during that window = cruise * this
+wheel_baseline_m:   0.10    # wheel-to-wheel distance for encoder yaw estimate
+
+# --- closed-loop odometry maneuver targets (used when encoders are present) ---
+cross_distance_m:     0.35   # forward distance to clear one intersection tile (real)
+cross_distance_sim_m: 0.55   # sim (pose odometry): carry across the WHOLE unmarked
+                             # box before handing back to the lane PD — releasing
+                             # mid-box left it steering with no markings in view
+maneuver_heading_kp:  0.6    # P gain holding heading straight during a cross
+turn_kp:              0.8    # P gain on remaining yaw error during a turn
+cross_dist_tol_m:     0.03   # distance tolerance for the cross exit
+turn_yaw_tol_rad:     0.08   # yaw tolerance for the turn exit
+
+# --- red stop-line firing gates (FIELD-TUNE) ---
+stopline_fire_dist:   0.45  # red-line dist_proxy >= this (0=far .. 1=near) to fire
+stopline_fire_width:  0.40  # red-line must span >= this fraction of frame width
+stopline_clear_frames: 5    # frames the line must be absent before the next event can fire
+
+# --- red stop-line geometry ---
+stopline_band_top_frac: 0.72   # detection band (low in frame)
+stopline_band_bot_frac: 0.98
+stopline_min_width_frac: 0.35  # a line spans a large fraction of width
+stopline_min_aspect:     3.0   # width/height: wide & short, not a blob
+stopline_min_area_px:    250
+
+# --- perception ---
+lane_healthy_min_pixels: 500
+
+# --- AprilTag traffic signs (Duckietown standard; cv2.aruco) ---
+# IDs MUST match your physical tags. Read them from the printed "tags=[...]"
+# (bot /status or /video page) or run: python scripts/decode_apriltag.py <photo>
+# NOTE: 25 and 26 are BOTH STOP-category IDs in Duckietown's apriltagsDB, so the
+# defaults below are placeholders -- verify and set your real STOP vs SLOW IDs.
+# (cv2.aruco needs opencv-contrib-python on the bot, else detection is disabled.)
+apriltag_family:    tag36h11   # tag36h11 | tag36h10 | tag25h9 | tag16h5
+apriltag_stop_ids:  [25]       # tag IDs that mean STOP  (VERIFY against your signs)
+apriltag_slow_ids:  [26]       # tag IDs that mean SLOW  (VERIFY against your signs)
+apriltag_min_area_px: 0        # was 400; 0 = remember any decoded tag (near-gate below halts)
+
+# A near STOP tag halts the bot directly (independent of the intersection red line).
+stop_tag_near_area_frac: 0.04  # halt when STOP bbox >= this fraction of the frame; tune from printed bbox
+stop_tag_halt_s:         1.0   # how long to hold that halt
+

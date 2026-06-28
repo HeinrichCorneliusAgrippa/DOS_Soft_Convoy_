@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://ywp80xp7wr76"]
+
+[ext_resource type="PackedScene" uid="uid://by8pqr474iaqj" path="res://scenes/robot/duckie_bot.tscn" id="1_w5h3n"]
+[ext_resource type="Environment" uid="uid://xlfv0dsmbfcm" path="res://Environment.tres" id="2_v5i1m"]
+[ext_resource type="Texture2D" uid="uid://ctpxnl5i08jgn" path="res://textures/leafy_grass_diff_4k.png" id="3_uvbh3"]
+[ext_resource type="Texture2D" uid="uid://dmarl4bfd7bia" path="res://textures/leafy_grass_nor_gl_4k.png" id="4_gi0y1"]
+[ext_resource type="PackedScene" uid="uid://3d3mqjeeyhw6" path="res://scenes/robot/IntroductionBase.tscn" id="5_q1r67"]
+[ext_resource type="PackedScene" uid="uid://b7ugvo11ae2ss" path="res://scenes/objects/DuckieRagdool.tscn" id="6_mlsbt"]
+[ext_resource type="PackedScene" uid="uid://cghelvr8fx5bv" path="res://models/VehicleCorected.glb" id="7_12m5x"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_lqe0e"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g70oi"]
+albedo_color = Color(0.14695662, 0.23146757, 0.031017188, 1)
+albedo_texture = ExtResource("3_uvbh3")
+normal_enabled = true
+normal_texture = ExtResource("4_gi0y1")
+uv1_scale = Vector3(60, 60, 60)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_v2526"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k15ss"]
+size = Vector3(2.0014038, 0.01751709, 1.9967651)
+
+[node name="Project" type="Node3D" unique_id=347687036]
+
+[node name="DuckieBot" parent="." unique_id=2139984255 instance=ExtResource("1_w5h3n")]
+transform = Transform3D(0.99965733, 0, -0.02617695, 0, 1, 0, 0.02617695, 0, 0.99965733, 4.3686967, 0.044506483, 5.252386)
+
+[node name="TopView" type="Camera3D" parent="DuckieBot" unique_id=707519608]
+transform = Transform3D(1.0000002, 0, 0, 0, 0.760406, 0.64944804, 0, -0.6494482, 0.7604062, 0, 0.549, 0.679)
+environment = ExtResource("2_v5i1m")
+
+[node name="Terrain" type="Node3D" parent="." unique_id=921395518]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Terrain" unique_id=1849923133]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/StaticBody3D" unique_id=1654829679]
+shape = SubResource("WorldBoundaryShape3D_lqe0e")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=1002268349]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=582045447]
+transform = Transform3D(10.057154, 0, 0, 0, 10.057154, 0, 0, 0, 10.057154, 4.9519005, 0, -1.3271989)
+material_override = SubResource("StandardMaterial3D_g70oi")
+mesh = SubResource("PlaneMesh_v2526")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=626793657]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=183982868]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021057427, -0.007904088, -0.00582888)
+shape = SubResource("BoxShape3D_k15ss")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=447023157]
+transform = Transform3D(1, 0, 0, 0, 0.0074698986, 0.9999721, 0, -0.9999721, 0.0074698986, -1.0819607, 10.15756, 0)
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=1326125352]
+transform = Transform3D(0.6938119, -0.5147703, 0.5036236, 0.08601526, 0.7535541, 0.6517344, -0.7150011, -0.4088617, 0.5671029, 5.9867754, 0.5320841, 5.418177)
+light_color = Color(0.97479993, 0.76028913, 0.58754224, 1)
+light_energy = 0.4
+shadow_enabled = true
+
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="." unique_id=1448128876]
+transform = Transform3D(0.29774472, 0.6048205, -0.738607, 0.0860153, 0.753554, 0.65173435, 0.9507626, -0.25758207, 0.17234287, 4.305622, 0.5320841, 5.418177)
+light_color = Color(0.5755736, 0.85234576, 0.9999997, 1)
+light_energy = 0.202
+shadow_enabled = true
+
+[node name="KiuPathObj" parent="." unique_id=1908243731 instance=ExtResource("5_q1r67")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2620525, 0.010445523, 4.8696938)
+
+[node name="Ducks" type="Node3D" parent="." unique_id=1537422006]
+
+[node name="Duckie" parent="Ducks" unique_id=275832261 instance=ExtResource("6_mlsbt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3744555, 0.061383232, 5.0297723)
+
+[node name="Duckie2" parent="Ducks" unique_id=439159443 instance=ExtResource("6_mlsbt")]
+transform = Transform3D(0.15846826, 0, -0.98736405, 0, 1, 0, 0.98736405, 0, 0.15846826, 4.366096, 0.061383232, 2.7223756)
+
+[node name="Duckie3" parent="Ducks" unique_id=398327452 instance=ExtResource("6_mlsbt")]
+transform = Transform3D(0.6373164, -0.09001359, -0.765327, 0, 0.99315435, -0.11680941, 0.7706022, 0.074444555, 0.6329536, 4.3744555, 0.061383232, 4.082597)
+
+[node name="Duckie4" parent="Ducks" unique_id=1523104267 instance=ExtResource("6_mlsbt")]
+transform = Transform3D(0.5951454, 0, 0.803618, 0, 1, 0, -0.803618, 0, 0.5951454, 5.348036, 0.061383232, 4.5874357)
+
+[node name="Duckie5" parent="Ducks" unique_id=1757320425 instance=ExtResource("6_mlsbt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.904711, 0.061383232, 1.7426312)
+
+[node name="Duckie6" parent="Ducks" unique_id=1546504016 instance=ExtResource("6_mlsbt")]
+transform = Transform3D(-0.9157608, 0, -0.401724, 0, 1, 0, 0.401724, 0, -0.9157608, 6.6291814, 0.061383232, 2.9687417)
+
+[node name="Duckie7" parent="Ducks" unique_id=1427225351 instance=ExtResource("6_mlsbt")]
+transform = Transform3D(0.8256456, 0, -0.5641891, 0, 1, 0, 0.5641891, 0, 0.8256456, 7.236731, 0.061383232, 0.7897048)
+
+[node name="VehicleCorected" parent="." unique_id=1056507017 instance=ExtResource("7_12m5x")]
+transform = Transform3D(0.59873, 0, -0.8009509, 0, 1, 0, 0.8009509, 0, 0.59873, 5.563538, 0.046961177, 3.072847)

@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://da6742qobglux"]
+
+[ext_resource type="PackedScene" uid="uid://by8pqr474iaqj" path="res://scenes/robot/duckie_bot.tscn" id="1_jgyyt"]
+[ext_resource type="Script" uid="uid://clcwdvyof1tge" path="res://scripts/TopViewFollow.gd" id="2_55dwb"]
+[ext_resource type="Texture2D" uid="uid://ctpxnl5i08jgn" path="res://textures/leafy_grass_diff_4k.png" id="3_t61w5"]
+[ext_resource type="Texture2D" uid="uid://dmarl4bfd7bia" path="res://textures/leafy_grass_nor_gl_4k.png" id="4_l4nk8"]
+[ext_resource type="PackedScene" uid="uid://b1lggcp0myfk2" path="res://models/lane_follower.glb" id="5_6g20y"]
+[ext_resource type="PackedScene" uid="uid://b7ugvo11ae2ss" path="res://scenes/objects/DuckieRagdool.tscn" id="6_fdf05"]
+[ext_resource type="PackedScene" uid="uid://cghelvr8fx5bv" path="res://models/VehicleCorected.glb" id="7_n2l6t"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_lqe0e"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lqe0e"]
+sky_top_color = Color(0.27745807, 0.6367754, 0.897324, 1)
+sky_horizon_color = Color(0.6430557, 0.81513584, 0.92623365, 1)
+
+[sub_resource type="Sky" id="Sky_h75p3"]
+sky_material = SubResource("ProceduralSkyMaterial_lqe0e")
+process_mode = 2
+
+[sub_resource type="Environment" id="Environment_1cson"]
+background_mode = 2
+sky = SubResource("Sky_h75p3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g70oi"]
+albedo_color = Color(0.14695662, 0.23146757, 0.031017188, 1)
+albedo_texture = ExtResource("3_t61w5")
+normal_enabled = true
+normal_texture = ExtResource("4_l4nk8")
+uv1_scale = Vector3(60, 60, 60)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_v2526"]
+
+[node name="lane_detect" type="Node3D" unique_id=347687036]
+
+[node name="DuckieBot" parent="." unique_id=2139984255 instance=ExtResource("1_jgyyt")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 3.622817, 0.047902994, 3.683652)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=447023157]
+transform = Transform3D(1, 0, 0, 0, 0.0074698986, 0.9999721, 0, -0.9999721, 0.0074698986, -1.0819607, 10.15756, 0)
+
+[node name="Terrain" type="Node3D" parent="." unique_id=921395518]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Terrain" unique_id=1849923133]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/StaticBody3D" unique_id=1654829679]
+shape = SubResource("WorldBoundaryShape3D_lqe0e")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1654275335]
+environment = SubResource("Environment_1cson")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=1002268349]
+
+[node name="TopView" type="Camera3D" parent="." unique_id=707519608]
+transform = Transform3D(1, 0, 0, 0, -0.006562349, 0.9999785, 0, -0.9999785, -0.006562349, 4.1725354, 0.919008, 5.3346515)
+script = ExtResource("2_55dwb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=582045447]
+transform = Transform3D(10.057154, 0, 0, 0, 10.057154, 0, 0, 0, 10.057154, 4.5697584, 0.00669533, -0.9157721)
+material_override = SubResource("StandardMaterial3D_g70oi")
+mesh = SubResource("PlaneMesh_v2526")
+
+[node name="lanefollower" parent="." unique_id=1136103115 instance=ExtResource("5_6g20y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1735616, 0.014968276, 5.171497)
+
+[node name="Duckie" parent="." unique_id=410782932 instance=ExtResource("6_fdf05")]
+transform = Transform3D(0.6373164, -0.09001359, -0.765327, 0, 0.99315435, -0.11680941, 0.7706022, 0.074444555, 0.6329536, 5.5575576, 0.061383232, 5.360138)
+
+[node name="VehicleCorected" parent="." unique_id=1056507017 instance=ExtResource("7_n2l6t")]
+transform = Transform3D(0.02916032, 0, -0.9995747, 0, 1, 0, 0.9995747, 0, 0.02916032, 5.210962, 0.046961177, 5.0892634)
+
+[node name="Duckie2" parent="." unique_id=275832261 instance=ExtResource("6_fdf05")]
+transform = Transform3D(0.6373164, -0.09001359, -0.765327, 0, 0.99315435, -0.11680941, 0.7706022, 0.074444555, 0.6329536, 5.968801, 0.061383232, 4.422494)
+
+[node name="Duckie3" parent="." unique_id=424191556 instance=ExtResource("6_fdf05")]
+transform = Transform3D(0.6373164, -0.09001359, -0.765327, 0, 0.99315435, -0.11680941, 0.7706022, 0.074444555, 0.6329536, 5.9152446, 0.061383232, 5.6645126)
+
+[node name="VehicleCorected2" parent="." unique_id=138014101 instance=ExtResource("7_n2l6t")]
+transform = Transform3D(-0.63404244, 0, -0.7732984, 0, 1, 0, 0.7732984, 0, -0.63404244, 6.6037526, 0.099114046, 5.0892634)
+
+[node name="VehicleCorected3" parent="." unique_id=420190795 instance=ExtResource("7_n2l6t")]
+transform = Transform3D(-0.8207506, 0, 0.5712868, 0, 1, 0, -0.5712868, 0, -0.8207506, 4.5087976, 0.046961177, 3.558249)
+
+[node name="Duckie4" parent="." unique_id=60841580 instance=ExtResource("6_fdf05")]
+transform = Transform3D(0.6373164, -0.09001359, -0.765327, 0, 0.99315435, -0.11680941, 0.7706022, 0.074444555, 0.6329536, 5.1062074, 0.061383232, 3.025775)

@@ -1,0 +1,549 @@
+[gd_scene format=3 uid="uid://ci34rier6fm8a"]
+
+[ext_resource type="PackedScene" uid="uid://by8pqr474iaqj" path="res://scenes/robot/duckie_bot.tscn" id="1_106ni"]
+[ext_resource type="Texture2D" uid="uid://ctpxnl5i08jgn" path="res://textures/leafy_grass_diff_4k.png" id="2_382mr"]
+[ext_resource type="Texture2D" uid="uid://dmarl4bfd7bia" path="res://textures/leafy_grass_nor_gl_4k.png" id="3_5pdul"]
+[ext_resource type="PackedScene" uid="uid://dx0xrmdkkrr1w" path="res://scenes/objects/Duckie.tscn" id="4_whc4x"]
+[ext_resource type="Script" uid="uid://clcwdvyof1tge" path="res://scripts/TopViewFollow.gd" id="5_3yhuy"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_lqe0e"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lqe0e"]
+albedo_color = Color(0.14695662, 0.23146757, 0.031017188, 1)
+albedo_texture = ExtResource("2_382mr")
+normal_enabled = true
+normal_texture = ExtResource("3_5pdul")
+uv1_scale = Vector3(60, 60, 60)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_h75p3"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lqe0e"]
+sky_top_color = Color(0.27745807, 0.6367754, 0.897324, 1)
+sky_horizon_color = Color(0.6430557, 0.81513584, 0.92623365, 1)
+
+[sub_resource type="Sky" id="Sky_h75p3"]
+sky_material = SubResource("ProceduralSkyMaterial_lqe0e")
+process_mode = 2
+
+[sub_resource type="Environment" id="Environment_1cson"]
+background_mode = 2
+sky = SubResource("Sky_h75p3")
+
+[node name="Project" type="Node3D" unique_id=951323176]
+
+[node name="DuckieBot" parent="." unique_id=421479594 instance=ExtResource("1_106ni")]
+transform = Transform3D(0.06310387, 0, 0.9980069, 0, 1, 0, -0.9980069, 0, 0.06310387, 6.410718, 0.05499634, -0.47879133)
+RotateOnStart = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=359932321]
+transform = Transform3D(1, 0, 0, 0, 0.0074698986, 0.9999721, 0, -0.9999721, 0.0074698986, -1.0819607, 10.15756, 0)
+
+[node name="Terrain" type="Node3D" parent="." unique_id=1791189701]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Terrain" unique_id=497948684]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/StaticBody3D" unique_id=1134394938]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.908551, 0.020279408, -1.0596733)
+shape = SubResource("WorldBoundaryShape3D_lqe0e")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain" unique_id=996548566]
+transform = Transform3D(10.057154, 0, 0, 0, 10.057154, 0, 0, 0, 10.057154, 4.5697584, 0.00669533, -0.9157721)
+material_override = SubResource("StandardMaterial3D_lqe0e")
+mesh = SubResource("PlaneMesh_h75p3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1786604192]
+environment = SubResource("Environment_1cson")
+
+[node name="Duckies" type="Node3D" parent="." unique_id=75710459]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Duckies" unique_id=856880605]
+
+[node name="DuckieWithHatwhole" parent="Duckies" unique_id=731251919 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.50308335, 0.07841277, 0.6332425)
+
+[node name="DuckieWithHatwhole2" parent="Duckies" unique_id=1249485966 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6701517, 0.114517845, -0.9468596)
+
+[node name="DuckieWithHatwhole3" parent="Duckies" unique_id=2007107737 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6717262, 0.07841277, 1.0948374)
+
+[node name="DuckieWithHatwhole4" parent="Duckies" unique_id=1731643604 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5424597, 0.07841277, -1.8801782)
+
+[node name="DuckieWithHatwhole5" parent="Duckies" unique_id=1852599693 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16051757, 0.07841277, -2.2077098)
+
+[node name="DuckieWithHatwhole6" parent="Duckies" unique_id=480978568 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4648913, 0.07841277, 2.0741189)
+
+[node name="DuckieWithHatwhole7" parent="Duckies" unique_id=349899722 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6921114, 0.07841277, 3.425652)
+
+[node name="DuckieWithHatwhole8" parent="Duckies" unique_id=1611631291 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.474957, 0.114517845, 1.8455501)
+
+[node name="DuckieWithHatwhole9" parent="Duckies" unique_id=1112136077 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4765315, 0.07841277, 3.887247)
+
+[node name="DuckieWithHatwhole10" parent="Duckies" unique_id=299003064 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.347265, 0.07841277, 0.91223145)
+
+[node name="DuckieWithHatwhole11" parent="Duckies" unique_id=581561483 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0346771, 0.07841277, 0.58469987)
+
+[node name="DuckieWithHatwhole12" parent="Duckies" unique_id=706845622 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2696966, 0.07841277, 4.8665285)
+
+[node name="DuckieWithHatwhole13" parent="Duckies" unique_id=1408557639 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.01269, 0.07841277, -4.78912)
+
+[node name="DuckieWithHatwhole14" parent="Duckies" unique_id=1766797769 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8456216, 0.114517845, -6.369222)
+
+[node name="DuckieWithHatwhole15" parent="Duckies" unique_id=90019671 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.84404707, 0.07841277, -4.3275256)
+
+[node name="DuckieWithHatwhole16" parent="Duckies" unique_id=2011632071 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.97331357, 0.07841277, -7.3025413)
+
+[node name="DuckieWithHatwhole17" parent="Duckies" unique_id=675454667 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3552556, 0.07841277, -7.6300726)
+
+[node name="DuckieWithHatwhole18" parent="Duckies" unique_id=1968926909 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0508819, 0.07841277, -3.3482442)
+
+[node name="DuckieWithHatwhole19" parent="Duckies" unique_id=606327882 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7132307, 0.07841277, -4.7123775)
+
+[node name="DuckieWithHatwhole20" parent="Duckies" unique_id=1806359653 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.880299, 0.114517845, -6.2924805)
+
+[node name="DuckieWithHatwhole21" parent="Duckies" unique_id=817563234 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8818736, 0.07841277, -4.250783)
+
+[node name="DuckieWithHatwhole22" parent="Duckies" unique_id=247775296 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.752607, 0.07841277, -7.2257986)
+
+[node name="DuckieWithHatwhole23" parent="Duckies" unique_id=1042072919 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.370665, 0.07841277, -7.5533304)
+
+[node name="DuckieWithHatwhole24" parent="Duckies" unique_id=2095211363 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6750388, 0.07841277, -3.2715013)
+
+[node name="DuckieWithHatwhole25" parent="Duckies" unique_id=444661663 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.886416, 0.07841277, 2.1083527)
+
+[node name="DuckieWithHatwhole26" parent="Duckies" unique_id=1128761210 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7193475, 0.114517845, 0.52825046)
+
+[node name="DuckieWithHatwhole27" parent="Duckies" unique_id=1352628026 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.717773, 0.07841277, 2.5699475)
+
+[node name="DuckieWithHatwhole28" parent="Duckies" unique_id=234464693 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8911955, 0.07841277, -0.49588907)
+
+[node name="DuckieWithHatwhole29" parent="Duckies" unique_id=486026562 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.089146, 0.07841277, -0.2978133)
+
+[node name="DuckieWithHatwhole30" parent="Duckies" unique_id=1483996360 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9246078, 0.07841277, 3.549229)
+
+[node name="DuckieWithHatwhole31" parent="Duckies" unique_id=1593135965 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5547957, 0.07841277, -2.6737251)
+
+[node name="DuckieWithHatwhole32" parent="Duckies" unique_id=1768593548 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3877273, 0.114517845, -4.253827)
+
+[node name="DuckieWithHatwhole33" parent="Duckies" unique_id=1783348680 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3861527, 0.07841277, -2.21213)
+
+[node name="DuckieWithHatwhole34" parent="Duckies" unique_id=1204721720 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5154192, 0.07841277, -5.1871457)
+
+[node name="DuckieWithHatwhole35" parent="Duckies" unique_id=469547845 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8973613, 0.07841277, -5.514677)
+
+[node name="DuckieWithHatwhole36" parent="Duckies" unique_id=1293348982 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5929875, 0.07841277, -1.2328486)
+
+[node name="DuckieWithHatwhole37" parent="Duckies" unique_id=1361737015 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1075546, 0.07841277, 6.761898)
+
+[node name="DuckieWithHatwhole38" parent="Duckies" unique_id=377213757 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.274623, 0.114517845, 5.181796)
+
+[node name="DuckieWithHatwhole39" parent="Duckies" unique_id=15029570 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2761974, 0.07841277, 7.2234926)
+
+[node name="DuckieWithHatwhole40" parent="Duckies" unique_id=857561578 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.146931, 0.07841277, 4.248477)
+
+[node name="DuckieWithHatwhole41" parent="Duckies" unique_id=433695055 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7649888, 0.07841277, 3.9209456)
+
+[node name="DuckieWithHatwhole42" parent="Duckies" unique_id=1662748508 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0693626, 0.07841277, 8.202774)
+
+[node name="DuckieWithHatwhole43" parent="Duckies" unique_id=705718969 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9583697, 0.07841277, 6.413694)
+
+[node name="DuckieWithHatwhole44" parent="Duckies" unique_id=32274270 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7913013, 0.114517845, 4.8335915)
+
+[node name="DuckieWithHatwhole45" parent="Duckies" unique_id=541140793 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7897267, 0.07841277, 6.875289)
+
+[node name="DuckieWithHatwhole46" parent="Duckies" unique_id=243244128 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9189932, 0.07841277, 3.9002733)
+
+[node name="DuckieWithHatwhole47" parent="Duckies" unique_id=261644419 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3009353, 0.07841277, 3.5727415)
+
+[node name="DuckieWithHatwhole48" parent="Duckies" unique_id=543088210 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9965615, 0.07841277, 7.8545704)
+
+[node name="DuckieWithHatwhole49" parent="Duckies" unique_id=942674201 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.967544, 0.114517845, -6.2924805)
+
+[node name="DuckieWithHatwhole50" parent="Duckies" unique_id=320276348 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.9659696, 0.07841277, -4.250783)
+
+[node name="DuckieWithHatwhole51" parent="Duckies" unique_id=1456413231 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.095236, 0.07841277, -7.2257986)
+
+[node name="DuckieWithHatwhole52" parent="Duckies" unique_id=366445522 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.477178, 0.07841277, -7.5533304)
+
+[node name="DuckieWithHatwhole53" parent="Duckies" unique_id=941562207 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1728044, 0.07841277, -3.2715013)
+
+[node name="DuckieWithHatwhole54" parent="Duckies" unique_id=1446582723 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.734259, 0.07841277, 2.1083527)
+
+[node name="DuckieWithHatwhole55" parent="Duckies" unique_id=1253967155 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.56719, 0.114517845, 0.52825046)
+
+[node name="DuckieWithHatwhole56" parent="Duckies" unique_id=1196043811 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.565617, 0.07841277, 2.5699475)
+
+[node name="DuckieWithHatwhole57" parent="Duckies" unique_id=1567091885 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.694882, 0.07841277, -0.40506816)
+
+[node name="DuckieWithHatwhole58" parent="Duckies" unique_id=810290401 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.076824, 0.07841277, -0.73259974)
+
+[node name="DuckieWithHatwhole59" parent="Duckies" unique_id=1434030448 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.772451, 0.07841277, 3.549229)
+
+[node name="DuckieWithHatwhole60" parent="Duckies" unique_id=363675216 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.402639, 0.07841277, -2.6737251)
+
+[node name="DuckieWithHatwhole61" parent="Duckies" unique_id=1001207867 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.235571, 0.114517845, -4.253827)
+
+[node name="DuckieWithHatwhole62" parent="Duckies" unique_id=423988952 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.233995, 0.07841277, -2.21213)
+
+[node name="DuckieWithHatwhole63" parent="Duckies" unique_id=1621795177 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.363262, 0.07841277, -5.1871457)
+
+[node name="DuckieWithHatwhole64" parent="Duckies" unique_id=457514476 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.745205, 0.07841277, -5.514677)
+
+[node name="DuckieWithHatwhole65" parent="Duckies" unique_id=448107841 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.44083, 0.07841277, -1.2328486)
+
+[node name="DuckieWithHatwhole66" parent="Duckies" unique_id=44801477 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.7402887, 0.07841277, 6.761898)
+
+[node name="DuckieWithHatwhole67" parent="Duckies" unique_id=586665056 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5732203, 0.114517845, 5.181796)
+
+[node name="DuckieWithHatwhole68" parent="Duckies" unique_id=154267174 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5716457, 0.07841277, 7.2234926)
+
+[node name="DuckieWithHatwhole69" parent="Duckies" unique_id=987579302 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7009125, 0.07841277, 4.248477)
+
+[node name="DuckieWithHatwhole70" parent="Duckies" unique_id=807343327 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.082854, 0.07841277, 3.9209456)
+
+[node name="DuckieWithHatwhole71" parent="Duckies" unique_id=2016209564 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7784805, 0.07841277, 8.202774)
+
+[node name="DuckieWithHatwhole72" parent="Duckies" unique_id=1543120822 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.806213, 0.07841277, 6.413694)
+
+[node name="DuckieWithHatwhole73" parent="Duckies" unique_id=1826370664 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.639145, 0.114517845, 4.8335915)
+
+[node name="DuckieWithHatwhole74" parent="Duckies" unique_id=1918545309 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.637569, 0.07841277, 6.875289)
+
+[node name="DuckieWithHatwhole75" parent="Duckies" unique_id=1764129735 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.766836, 0.07841277, 3.9002733)
+
+[node name="DuckieWithHatwhole76" parent="Duckies" unique_id=815828715 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.148779, 0.07841277, 3.5727415)
+
+[node name="DuckieWithHatwhole77" parent="Duckies" unique_id=1462736924 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.844404, 0.07841277, 7.8545704)
+
+[node name="DuckieWithHatwhole78" parent="Duckies" unique_id=438995098 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.881337, 0.07841277, 0.6332425)
+
+[node name="DuckieWithHatwhole79" parent="Duckies" unique_id=935304543 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.813003, 0.114517845, -1.0987822)
+
+[node name="DuckieWithHatwhole80" parent="Duckies" unique_id=1607932669 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3627605, 0.07841277, 1.0948374)
+
+[node name="DuckieWithHatwhole81" parent="Duckies" unique_id=2139415391 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8419607, 0.07841277, -1.8801782)
+
+[node name="DuckieWithHatwhole82" parent="Duckies" unique_id=1590931721 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2239027, 0.07841277, -2.2077098)
+
+[node name="DuckieWithHatwhole83" parent="Duckies" unique_id=452509698 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.634217, 0.07841277, -0.72155666)
+
+[node name="DuckieWithHatwhole84" parent="Duckies" unique_id=25259030 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.467149, 0.114517845, -2.3016586)
+
+[node name="DuckieWithHatwhole85" parent="Duckies" unique_id=366416871 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4655743, 0.07841277, -0.25996184)
+
+[node name="DuckieWithHatwhole86" parent="Duckies" unique_id=94041932 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.594841, 0.07841277, -3.2349777)
+
+[node name="DuckieWithHatwhole87" parent="Duckies" unique_id=1416819047 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.976783, 0.07841277, -3.562509)
+
+[node name="DuckieWithHatwhole88" parent="Duckies" unique_id=494290468 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.79326, 0.07841277, -4.752858)
+
+[node name="DuckieWithHatwhole89" parent="Duckies" unique_id=1168551061 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.626191, 0.114517845, -6.33296)
+
+[node name="DuckieWithHatwhole90" parent="Duckies" unique_id=214574731 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.6246166, 0.07841277, -4.2912636)
+
+[node name="DuckieWithHatwhole91" parent="Duckies" unique_id=314836086 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7538834, 0.07841277, -7.266279)
+
+[node name="DuckieWithHatwhole92" parent="Duckies" unique_id=1135934909 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.135825, 0.07841277, -7.5938106)
+
+[node name="DuckieWithHatwhole93" parent="Duckies" unique_id=1200690518 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.77328, 0.07841277, 3.1051273)
+
+[node name="DuckieWithHatwhole94" parent="Duckies" unique_id=165440882 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.606212, 0.114517845, 1.5250254)
+
+[node name="DuckieWithHatwhole95" parent="Duckies" unique_id=307125062 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.604637, 0.07841277, 3.5667224)
+
+[node name="DuckieWithHatwhole96" parent="Duckies" unique_id=2075613643 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.733904, 0.07841277, 0.59170675)
+
+[node name="DuckieWithHatwhole97" parent="Duckies" unique_id=601989585 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.115846, 0.07841277, 0.26417518)
+
+[node name="DuckieWithHatwhole98" parent="Duckies" unique_id=1381495241 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.811472, 0.07841277, 4.546004)
+
+[node name="DuckieWithHatwhole99" parent="Duckies" unique_id=1176657858 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.968474, 0.07841277, 5.897537)
+
+[node name="DuckieWithHatwhole100" parent="Duckies" unique_id=301750023 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.582734, 0.114517845, 3.4840946)
+
+[node name="DuckieWithHatwhole101" parent="Duckies" unique_id=2077906157 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5811596, 0.07841277, 5.525791)
+
+[node name="DuckieWithHatwhole102" parent="Duckies" unique_id=196313699 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7104263, 0.07841277, 2.5507755)
+
+[node name="DuckieWithHatwhole103" parent="Duckies" unique_id=476281080 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.092368, 0.07841277, 2.2232442)
+
+[node name="DuckieWithHatwhole104" parent="Duckies" unique_id=1371283692 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.265226, 0.07841277, -1.3918124)
+
+[node name="DuckieWithHatwhole105" parent="Duckies" unique_id=745901483 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0981574, 0.114517845, -2.9719145)
+
+[node name="DuckieWithHatwhole106" parent="Duckies" unique_id=890002840 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09658289, 0.07841277, -0.9302175)
+
+[node name="DuckieWithHatwhole107" parent="Duckies" unique_id=437274638 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22584939, 0.07841277, -3.9052331)
+
+[node name="DuckieWithHatwhole108" parent="Duckies" unique_id=1173950123 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6077914, 0.07841277, -4.2327647)
+
+[node name="DuckieWithHatwhole109" parent="Duckies" unique_id=666636265 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3034177, 0.07841277, 0.04906392)
+
+[node name="DuckieWithHatwhole110" parent="Duckies" unique_id=293869101 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4604206, 0.07841277, 1.4005971)
+
+[node name="DuckieWithHatwhole111" parent="Duckies" unique_id=1337408438 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2933521, 0.114517845, -0.17950487)
+
+[node name="DuckieWithHatwhole112" parent="Duckies" unique_id=1475869129 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2917776, 0.07841277, 1.8621922)
+
+[node name="DuckieWithHatwhole113" parent="Duckies" unique_id=1353172618 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4210441, 0.07841277, -1.1128235)
+
+[node name="DuckieWithHatwhole114" parent="Duckies" unique_id=1587287663 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8029861, 0.07841277, -1.4403551)
+
+[node name="DuckieWithHatwhole115" parent="Duckies" unique_id=115538581 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4986124, 0.07841277, 2.8414736)
+
+[node name="DuckieWithHatwhole116" parent="Duckies" unique_id=1546054118 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.780999, 0.07841277, -6.814175)
+
+[node name="DuckieWithHatwhole117" parent="Duckies" unique_id=111231413 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6139307, 0.114517845, -8.394278)
+
+[node name="DuckieWithHatwhole118" parent="Duckies" unique_id=1759931390 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6123562, 0.07841277, -6.3525805)
+
+[node name="DuckieWithHatwhole119" parent="Duckies" unique_id=86846157 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7416224, 0.07841277, -9.327597)
+
+[node name="DuckieWithHatwhole120" parent="Duckies" unique_id=109922025 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1235647, 0.07841277, -9.655128)
+
+[node name="DuckieWithHatwhole121" parent="Duckies" unique_id=1368480343 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.819191, 0.07841277, -5.373299)
+
+[node name="DuckieWithHatwhole122" parent="Duckies" unique_id=468952356 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0550785, 0.07841277, -6.7374325)
+
+[node name="DuckieWithHatwhole123" parent="Duckies" unique_id=953433562 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.111989975, 0.114517845, -8.317535)
+
+[node name="DuckieWithHatwhole124" parent="Duckies" unique_id=1373988764 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1135645, 0.07841277, -6.275838)
+
+[node name="DuckieWithHatwhole125" parent="Duckies" unique_id=661534716 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.984298, 0.07841277, -9.250854)
+
+[node name="DuckieWithHatwhole126" parent="Duckies" unique_id=1034077178 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.397644, 0.07841277, -9.578385)
+
+[node name="DuckieWithHatwhole127" parent="Duckies" unique_id=1723325968 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0932703, 0.07841277, -5.2965565)
+
+[node name="DuckieWithHatwhole128" parent="Duckies" unique_id=34170000 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.654725, 0.07841277, 0.08329773)
+
+[node name="DuckieWithHatwhole129" parent="Duckies" unique_id=1154416342 instance=ExtResource("4_whc4x")]
+transform = Transform3D(0.99984616, 0.017539658, 0, -0.017539658, 0.99984616, 0, 0, 0, 1, 5.4876566, 0.114517845, -1.4968045)
+
+[node name="DuckieWithHatwhole130" parent="Duckies" unique_id=748460228 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.486082, 0.07841277, 0.54489255)
+
+[node name="DuckieWithHatwhole131" parent="Duckies" unique_id=1428964297 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6153483, 0.07841277, -2.430123)
+
+[node name="DuckieWithHatwhole132" parent="Duckies" unique_id=394466776 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.997291, 0.07841277, -2.7576547)
+
+[node name="DuckieWithHatwhole133" parent="Duckies" unique_id=1937071718 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.692917, 0.07841277, 1.524174)
+
+[node name="DuckieWithHatwhole134" parent="Duckies" unique_id=1347775625 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.323105, 0.07841277, -4.69878)
+
+[node name="DuckieWithHatwhole135" parent="Duckies" unique_id=1438164536 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.1560364, 0.114517845, -6.278882)
+
+[node name="DuckieWithHatwhole136" parent="Duckies" unique_id=1858754973 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.154462, 0.07841277, -4.237185)
+
+[node name="DuckieWithHatwhole137" parent="Duckies" unique_id=592689919 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.283728, 0.07841277, -7.2122006)
+
+[node name="DuckieWithHatwhole138" parent="Duckies" unique_id=2037925433 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.6656704, 0.07841277, -7.539732)
+
+[node name="DuckieWithHatwhole139" parent="Duckies" unique_id=193370948 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3612967, 0.07841277, -3.2579036)
+
+[node name="DuckieWithHatwhole140" parent="Duckies" unique_id=2002030912 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6607547, 0.07841277, 4.736843)
+
+[node name="DuckieWithHatwhole141" parent="Duckies" unique_id=1972966717 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4936862, 0.114517845, 3.1567411)
+
+[node name="DuckieWithHatwhole142" parent="Duckies" unique_id=352268275 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5078883, 0.07841277, 5.1984377)
+
+[node name="DuckieWithHatwhole143" parent="Duckies" unique_id=113941501 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.37862182, 0.07841277, 2.223422)
+
+[node name="DuckieWithHatwhole144" parent="Duckies" unique_id=1396742510 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0033202, 0.07841277, 1.8958907)
+
+[node name="DuckieWithHatwhole145" parent="Duckies" unique_id=82474884 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6989465, 0.07841277, 6.177719)
+
+[node name="DuckieWithHatwhole146" parent="Duckies" unique_id=125593338 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.726679, 0.07841277, 4.388639)
+
+[node name="DuckieWithHatwhole147" parent="Duckies" unique_id=1724069056 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5596104, 0.114517845, 2.8085365)
+
+[node name="DuckieWithHatwhole148" parent="Duckies" unique_id=514523855 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.558036, 0.07841277, 4.850234)
+
+[node name="DuckieWithHatwhole149" parent="Duckies" unique_id=1206100718 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.687302, 0.07841277, 1.8752184)
+
+[node name="DuckieWithHatwhole150" parent="Duckies" unique_id=1609817500 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.069244, 0.07841277, 1.5476866)
+
+[node name="DuckieWithHatwhole151" parent="Duckies" unique_id=626670299 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7648706, 0.07841277, 5.8295155)
+
+[node name="DuckieWithHatwhole152" parent="Duckies" unique_id=659147756 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.735853, 0.114517845, -8.317535)
+
+[node name="DuckieWithHatwhole153" parent="Duckies" unique_id=942314285 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.734279, 0.07841277, -6.275838)
+
+[node name="DuckieWithHatwhole154" parent="Duckies" unique_id=585893792 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.863545, 0.07841277, -9.250854)
+
+[node name="DuckieWithHatwhole155" parent="Duckies" unique_id=375929916 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.245487, 0.07841277, -9.578385)
+
+[node name="DuckieWithHatwhole156" parent="Duckies" unique_id=2044451157 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.941114, 0.07841277, -5.2965565)
+
+[node name="DuckieWithHatwhole157" parent="Duckies" unique_id=1981575065 instance=ExtResource("4_whc4x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.351602, 0.07841277, 0.08329773)
+
+[node name="TopView" type="Camera3D" parent="." unique_id=1945639577]
+transform = Transform3D(1, 0, 0, 0, -0.006562349, 0.9999785, 0, -0.9999785, -0.006562349, 6.4081225, 4.007037, -0.45372033)
+script = ExtResource("5_3yhuy")
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=860016263]
+transform = Transform3D(1, 0, 0, 0, 0.0074698986, 0.9999721, 0, -0.9999721, 0.0074698986, -1.0819607, 10.15756, 0)
+
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="." unique_id=358715424]
+transform = Transform3D(0.6938119, -0.5147703, 0.5036236, 0.08601526, 0.7535541, 0.6517344, -0.7150011, -0.4088617, 0.5671029, 5.9867754, 0.5320841, 5.418177)
+light_color = Color(0.97479993, 0.76028913, 0.58754224, 1)
+light_energy = 0.4
+shadow_enabled = true
+
+[node name="DirectionalLight3D4" type="DirectionalLight3D" parent="." unique_id=1620114259]
+transform = Transform3D(0.29774472, 0.6048205, -0.738607, 0.0860153, 0.753554, 0.65173435, 0.9507626, -0.25758207, 0.17234287, 4.305622, 0.5320841, 5.418177)
+light_color = Color(0.5755736, 0.85234576, 0.9999997, 1)
+light_energy = 0.202
+shadow_enabled = true

@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://mo3nfx0lk1h3"]
+
+[ext_resource type="Script" uid="uid://obyuy0tcovi0" path="res://scripts/sign.gd" id="1_11b3j"]
+[ext_resource type="PackedScene" uid="uid://sgusonvb3wnr" path="res://models/Stopsign.glb" id="1_stop"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_11b3j"]
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_fdedm"]
+material = SubResource("StandardMaterial3D_11b3j")
+size = Vector2(0.07, 0.07)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ujw2r"]
+size = Vector3(0.08, 0.155, 0.001)
+
+[node name="ObjStopSign" type="Node3D" unique_id=1575506644]
+script = ExtResource("1_11b3j")
+
+[node name="Sign" parent="." unique_id=1400785124 instance=ExtResource("1_stop")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+
+[node name="texture" type="MeshInstance3D" parent="." unique_id=307105233]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.10689279, 0.003327623)
+mesh = SubResource("PlaneMesh_fdedm")
+
+[node name="panel" type="MeshInstance3D" parent="." unique_id=419437448]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14867032, 0.0026887022)
+mesh = SubResource("BoxMesh_ujw2r")

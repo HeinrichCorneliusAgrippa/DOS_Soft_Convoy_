@@ -1,0 +1,14 @@
+base_speed: 0.31
+curve_speed: 0.25
+# px of line BEND across the 3 slices (x0 - 2*x1 + x2), not the old near-far
+# shift — old 350-scale values disable curve detection entirely.
+curve_threshold: 15
+d_gain: 0.79
+detection_threshold: 100
+p_gain: 0.18
+# NOTE: heading_gain / lateral_gain are NOT read by LaneServoingAgent (which is
+# a PD controller on lateral error using p_gain/d_gain). They are recorded here
+# but have no effect until wired into the controller — ask to enable.
+heading_gain: 1.03
+lateral_gain: 26
+ 

@@ -1,0 +1,17 @@
+resolution:
+  width: 640
+  height: 480
+framerate: 30
+sensor_mode: 0
+use_hw_acceleration: true
+
+maker: "Seeed Technology Co., Ltd"
+model: "IMX219"
+fov: 160  
+exposure_mode: "sports"
+
+# White balance to fix the IMX219 green cast (nvarguscamerasrc wbmode):
+#   0=off 1=auto 2=incandescent 3=fluorescent 4=daylight 5=cloudy 6=twilight
+# Start at 1 (auto); if the feed is still green, try 3 (fluorescent) or 4 (daylight).
+wbmode: 1
+saturation: 1.0

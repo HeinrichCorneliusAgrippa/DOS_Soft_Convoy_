@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dsxbif155ikun"]
+
+[ext_resource type="PackedScene" uid="uid://cghelvr8fx5bv" path="res://models/VehicleCorected.glb" id="2_7vqs5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bir6l"]
+size = Vector3(0.1350708, 0.11753559, 0.19760895)
+
+[node name="DuckieBot_NPC" type="CharacterBody3D" unique_id=865415826]
+
+[node name="VehicleCorected" parent="." unique_id=1573770069 instance=ExtResource("2_7vqs5")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=894967562]
+transform = Transform3D(0.9999896, 0, -4.301903e-09, 0, 1, 0, 4.301903e-09, 0, 0.9999896, 2.8588012e-11, 0.03603549, 0.006219766)
+shape = SubResource("BoxShape3D_bir6l")

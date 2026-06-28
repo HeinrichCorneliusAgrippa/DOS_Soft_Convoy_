@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://yv75f3ihtosh"]
+
+[ext_resource type="Texture2D" uid="uid://7k2erpn70e3" path="res://textures/Material_004_albedo.png" id="1_8sluc"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_y5fr7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xut06"]
+albedo_texture = ExtResource("1_8sluc")
+albedo_texture_force_srgb = true
+
+[node name="Node3D" type="Node3D" unique_id=1649637452]
+
+[node name="RoadStraight" type="MeshInstance3D" parent="." unique_id=185978199]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+mesh = SubResource("PlaneMesh_y5fr7")
+surface_material_override/0 = SubResource("StandardMaterial3D_xut06")

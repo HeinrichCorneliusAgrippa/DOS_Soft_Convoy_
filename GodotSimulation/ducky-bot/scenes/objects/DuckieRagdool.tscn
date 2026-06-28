@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://b7ugvo11ae2ss"]
+
+[ext_resource type="PackedScene" uid="uid://dwd8q1ek717gb" path="res://models/DuckieWithHatwhole.glb" id="1_igprc"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_igprc"]
+radius = 0.05
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_igprc"]
+size = Vector3(0.04519287, 0.015, 0.036918946)
+
+[node name="Duckie" type="RigidBody3D" unique_id=275832261]
+mass = 2.0
+linear_damp = 2.0
+angular_damp = 8.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=315713951]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012190428, -0.014301712)
+shape = SubResource("SphereShape3D_igprc")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=1187533697]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00025756843, -0.028360963, -0.0033422392)
+shape = SubResource("BoxShape3D_igprc")
+
+[node name="DuckieWithHatwhole" parent="." unique_id=315713952 instance=ExtResource("1_igprc")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.005035743, 1.1920929e-07, -0.009053946)

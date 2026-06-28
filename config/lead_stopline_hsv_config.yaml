@@ -1,0 +1,14 @@
+# HSV bounds for the lead bot's red STOP-LINE detector (separate from the old
+# LED HSV: tape is usually less saturated / brighter than an LED). Red wraps
+# hue=0 in OpenCV's H=[0,180] space, so two ranges are OR'd together.
+# Tune on the real floor under the venue lighting.
+# Tuned to a measured red-line pixel: H~178 S~140 V~226 (bright, saturated).
+# Glare highlights on the tape read very low-S (~21) and are excluded by s_min.
+red_low_h_min:  0
+red_low_h_max:  10
+red_high_h_min: 165
+red_high_h_max: 180
+s_min: 90
+s_max: 255
+v_min: 100
+v_max: 255

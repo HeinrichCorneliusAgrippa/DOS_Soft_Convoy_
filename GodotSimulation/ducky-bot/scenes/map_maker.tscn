@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dh0b7wn4i1xpy"]
+
+[ext_resource type="Script" uid="uid://dwyt4fq6x64bo" path="res://scripts/MapMaker.gd" id="1_mapmaker"]
+
+[node name="MapMaker" type="Node3D" unique_id=1207831593]
+script = ExtResource("1_mapmaker")

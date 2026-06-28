@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://dyrtmr4e2qq2d"]
+
+[ext_resource type="PackedScene" uid="uid://73xod4eog2wf" path="res://models/DuckieWithHatwhole.glb" id="2_5ojl1"]
+
+[sub_resource type="GDScript" id="GDScript_ka2no"]
+script/source = "extends CharacterBody3D
+
+@export var move_speed: float = 3.0
+@export var turn_speed: float = 2.5
+
+func _physics_process(delta: float) -> void:
+	var input_vector := Vector2.ZERO
+
+	# WASD or arrow keys
+	if Input.is_action_pressed(\"move_forward\"):
+		input_vector.y -= 1.0
+	if Input.is_action_pressed(\"move_backward\"):
+		input_vector.y += 1.0
+	if Input.is_action_pressed(\"move_left\"):
+		input_vector.x -= 1.0
+	if Input.is_action_pressed(\"move_right\"):
+		input_vector.x += 1.0
+
+	# Turning (left/right rotate around Y)
+	if input_vector.x != 0.0:
+		rotation.y += input_vector.x * turn_speed * delta
+
+	# Move forward/back along the duckiebot's local Z axis
+	var direction := -transform.basis.z  # forward direction in Godot
+	var velocity_3d := Vector3.ZERO
+
+	velocity_3d = direction * (input_vector.y * move_speed)
+	velocity = velocity_3d
+
+	move_and_slide()
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rkdot"]
+size = Vector3(0.27514648, 0.4578247, 0.41216278)
+
+[node name="duckietown_scene" type="Node3D"]
+
+[node name="Duckiebot" type="CharacterBody3D" parent="."]
+script = SubResource("GDScript_ka2no")
+
+[node name="DuckieWithHatwhole" parent="Duckiebot" instance=ExtResource("2_5ojl1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09229183, 0.13528353, -0.056423187)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Duckiebot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.103149414, 0.177948, -0.076610565)
+shape = SubResource("BoxShape3D_rkdot")

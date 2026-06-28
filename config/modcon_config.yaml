@@ -1,0 +1,14 @@
+baseline: 0.1
+radius: 0.0318
+k: 27.0
+gain: 1.0
+trim: 0
+power_limit: 0.85
+v_max: 1.0
+omega_max: 8.0
+k_P: 0.27
+k_I: 0.0
+k_D: 0.0
+max_omega: 8.0
+v_0: 0.3
+k_heading: 0.5

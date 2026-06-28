@@ -1,0 +1,71 @@
+# ============================================================================
+# FOLLOWER bot config (project_follow). Pure pursuit of the lead's circle-grid
+# back marker + lane fallback. No traffic-sign logic. Distance values are in the
+# circle-grid mean-dot-spacing proxy (px) and MUST be field-tuned from real
+# footage (read the printed "span=...px" at known gaps).
+# ============================================================================
+
+cruise_speed: 0.30
+
+# --- follow distance taper (FIELD-TUNE: grid mean dot spacing in px) ---
+grid_safe_px:  18      # span <= this  => far  => full cruise speed
+grid_stop_px:  70      # span >= this  => close => zero speed (implicit stop)
+grid_close_px: 55      # lost while span >= this => CLOSE_STOP (don't coast into the lead)
+grid_arm_px:   60      # only start following once a gap this large (span <= this) has opened
+grid_min_score: 0.5
+
+# --- pursuit steering ---
+leader_p_gain: 0.6
+max_steer:     0.4
+
+# --- lost handling ---
+leader_lost_grace_s:    0.4   # window after the grid drops before handing off to lane pursuit
+pursuit_timeout_s:      25.0  # pursue this long after the last sighting before HOLD
+                              # (tight curves flicker lane health; don't park mid-corner)
+pursuit_speed:          0.17  # lane speed while the leader was seen recently: keep it just
+                              # above the leader's corner pace — at full cruise the follower
+                              # cuts the corner and blindly overtakes the leader mid-turn
+reacquire_creep_speed:  0.12  # slow creep while reacquiring into a corner
+reacquire_steer_gain:   0.8   # steer toward the last-seen marker bearing
+reacquire_heading_gain: 0.0   # best-effort tilt feed-forward; off by default (no intrinsics)
+
+# --- pursuit turn: mimic the leader's corner instead of cutting toward it ---
+turn_lateral_min:       0.18  # marker swept this far off-center at the loss => the leader turned
+turn_heading_min:       0.06  # |perspective heading| in the last sightings => the leader turned
+                              # (FOLLOW keeps the marker centered, so lateral rarely fires;
+                              #  sim-calibrated sign: negative heading = leader yawing right)
+span_to_dist_k:         13.5  # camera-to-board distance from span: d = k / span_px
+                              # (k = focal_px * dot spacing; Godot fov 75 deg is VERTICAL ->
+                              #  f = 240/tan(37.5) = 313 px, * 0.042 m — FIELD-TUNE for real)
+turn_approach_margin_m: -0.10 # offset from the marker's vanish point (+ = stop short,
+                              # - = overshoot). The board trails the leader's body, so the
+                              # corner itself is ~a body-length PAST where the board vanished
+pursuit_turn_speed:     0.15  # forward speed during approach + turn
+pursuit_turn_steer:     0.06  # turn-arc steer (+ = left). Sets the arc RADIUS:
+                              # r = speed*baseline/(2*steer*max_wheel_speed). 0.06 in sim
+                              # (1 m/s wheels) ~ the 0.17 m corner arc — FIELD-TUNE for real
+turn_yaw_target_rad:    1.5   # ~86 deg; the closed-loop turn is accurate, come out square
+max_pursuit_turn_s:     4.0   # hard timeout on the turn phase (no-odometry fallback)
+post_turn_settle_s:     3.0   # hold still after the turn so the tailgated leader pulls
+                              # away into detection range (grid must FIT in the frame)
+
+# --- lane fallback ---
+lane_healthy_min_pixels: 500
+
+# --- chain signal ---
+rear_led_indices: [3, 4]   # lit red while following, for any further follower
+
+# --- circle-grid tracker (cv2.findCirclesGrid) ---
+grid_cols: 7
+grid_rows: 3
+grid_downscale: 0.5          # downscale gray before detection (perf)
+grid_roi_pad_px: 60          # padding around last hit for the ROI search
+grid_roi_downscale: 1.0      # the ROI is small -> search it at full res (~2x range)
+grid_far_search: true        # when lost, also scan a full-res horizon band so a
+grid_far_band_top_frac: 0.10 #   distant leader (~3 m) is re-found after corners
+grid_far_band_bot_frac: 0.45
+grid_lost_grace_frames: 6    # tracker-level reuse of last estimate on a miss
+grid_use_clustering: false   # CALIB_CB_CLUSTERING: better at steep angles, worse w/ clutter
+grid_blob_min_area: 10       # SimpleBlobDetector dot-area bounds (FIELD-TUNE)
+grid_blob_max_area: 8000
+grid_blob_min_circularity: 0.6
